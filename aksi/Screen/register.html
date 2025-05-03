@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Register Employee</h1>
+        <div class="form-register">
+            <form action="../register.php" method="post">
+                <input type="text" name="Name" placeholder="Username" required>
+                <input type="text" name="Email" placeholder="Email" required>
+                <select name="Role" id="role">
+                    <option value="">-- Pilih Peran --</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Cashier">Cashier</option>
+                </select>
+                <input type="password" name="Password" placeholder="Password" required>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

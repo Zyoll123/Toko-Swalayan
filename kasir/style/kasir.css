@@ -1,0 +1,270 @@
+/* Reset dan dasar */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.side-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.user-info {
+    color: #ecf0f1;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #34495e;
+    text-align: center;
+}
+
+.side-bar-item,
+.log-out {
+    padding: 10px 20px;
+}
+
+.side-bar-item a,
+.log-out a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 12px 20px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 6px;
+}
+
+.side-bar-item a:hover,
+.log-out a:hover {
+    background-color: #34495e;
+    color: #1abc9c;
+}
+
+.log-out {
+    margin-top: auto;
+}
+
+/* Konten utama */
+.content {
+    margin-left: 250px;
+    margin-right: 320px;
+    padding: 30px;
+    flex: 1;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+}
+
+.search-input {
+    margin-bottom: 20px;
+}
+
+.search-input input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Menu produk */
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.menu {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+}
+
+.menu p {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.menu-item img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.menu-info {
+    flex: 1;
+}
+
+.menu-info p {
+    margin: 4px 0;
+}
+
+.stock-product {
+    font-size: 13px;
+    color: #888;
+}
+
+.input-number-container {
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+}
+
+.input-number-container button {
+    padding: 4px 10px;
+    background-color: #2c3e50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input-number-container input {
+    width: 50px;
+    text-align: center;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.added-product-transaction button {
+    margin-top: 6px;
+    width: 100%;
+    padding: 6px;
+    background-color: #1abc9c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.added-product-transaction button:hover {
+    background-color: #16a085;
+}
+
+/* Transaction Info (Fixed Kanan) */
+.transaction-info {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    z-index: 90;
+}
+
+.transaction-info input[type="text"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+}
+
+#liveClock {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.transaction-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.transaction-content p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #34495e;
+}
+
+.submit-transaction {
+    margin-top: 20px;
+}
+
+.submit-transaction button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-transaction button:hover {
+    background-color: #34495e;
+    color: #1abc9c;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .menu {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .side-bar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .content {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 20px;
+    }
+
+    .transaction-info {
+        position: relative;
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+        margin-top: 20px;
+    }
+
+    .menu {
+        width: 100%;
+    }
+}
