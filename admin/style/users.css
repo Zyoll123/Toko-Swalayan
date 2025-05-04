@@ -91,7 +91,6 @@ body {
     gap: 10px;
 }
 
-
 .selection-card {
     display: inline-block;
     padding: 12px 24px;
@@ -116,12 +115,12 @@ body {
 }
 
 /* Tombol di sisi kanan */
-.add-product {
+.add-users {
     display: flex;
     gap: 10px; /* jika ingin tanpa spasi sama sekali, ubah ke 0 */
 }
 
-.add-product a {
+.add-users a {
     padding: 10px 16px;
     background-color: #2980b9;
     color: white;
@@ -131,11 +130,10 @@ body {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-.add-product a:hover {
+.add-users a:hover {
     background-color: #3498db;
     transform: translateY(-2px);
 }
-
 
 /* Table style */
 table {
@@ -153,3 +151,40 @@ th {
     background-color: #1abc9c;
     color: white;
 }
+
+/* Tombol edit/delete */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.btn.edit {
+    background-color: #3498db;
+}
+
+.btn.edit:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.btn.delete {
+    background-color: #e74c3c;
+}
+
+.btn.delete:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+

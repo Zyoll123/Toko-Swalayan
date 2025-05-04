@@ -1,0 +1,163 @@
+/* Reset dan dasar */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+}
+
+
+/* Sidebar */
+.side-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.user-info {
+    color: #ecf0f1;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #34495e;
+    text-align: center;
+}
+
+.side-bar-item,
+.log-out {
+    padding: 10px 20px;
+}
+
+.side-bar-item a,
+.log-out a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 12px 20px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 6px;
+}
+
+.side-bar-item a:hover,
+.log-out a:hover {
+    background-color: #34495e;
+    color: #1abc9c;
+}
+
+.log-out {
+    margin-top: auto;
+}
+
+/* Konten utama */
+.content {
+    margin-left: 250px; /* ruang untuk sidebar */
+    padding: 40px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* agar vertikal tengah */
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+
+.title h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #1abc9c;
+    border-bottom: 2px solid #1abc9c;
+    padding-bottom: 10px;
+}
+
+/* Form Styling */
+form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input,
+select {
+    padding: 14px 16px;
+    font-size: 16px;
+    border: 1px solid #bdc3c7;
+    border-radius: 10px;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus,
+select:focus {
+    outline: none;
+    border-color: #1abc9c;
+}
+
+.custom-file-upload {
+    background-color: #ecf0f1;
+    padding: 10px;
+    border: 2px dashed #bdc3c7;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 500;
+    color: #7f8c8d;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-name {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-top: 8px;
+    padding-left: 5px;
+}
+
+/* Submit Button */
+button[type="submit"] {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+    /* align-self: flex-end; <-- HAPUS INI */
+}
+
+
+button[type="submit"]:hover {
+    background-color: #16a085;
+    transform: scale(1.03);
+}

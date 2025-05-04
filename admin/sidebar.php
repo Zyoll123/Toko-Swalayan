@@ -9,7 +9,7 @@
         <a href="products.php">Products</a>
     </div>
     <div class="side-bar-item">
-        <a href="#">Users</a>
+        <a href="users.php">Users</a>
     </div>
     <div class="log-out">
         <a href="#">Log Out</a>

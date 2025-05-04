@@ -2,7 +2,7 @@
 session_start();
 if (!isset($_SESSION['Name'])) {
     header("Location: ../login/login.html");
-    exit();
+    exit;
 }
 
 include '../aksi/koneksi.php';
@@ -14,12 +14,15 @@ $active_filter = 'all';
 
 if (isset($_GET['filter'])) {
     $filter = $_GET['filter'];
-    
+
     if ($filter === 'display') {
         $query = "SELECT * FROM products";
         $active_filter = 'display';
     } elseif ($filter === 'warehouse') {
-        $query = "SELECT * FROM warehouses";
+        $query = "SELECT products.Name, products.Price, products.Description, warehouses.Stock
+                FROM warehouses
+                INNER JOIN products ON warehouses.Product_Id = products.Id
+                WHERE warehouses.Stock > 0 ";
         $active_filter = 'warehouse';
     }
 }
@@ -40,12 +43,22 @@ if (isset($_GET['filter'])) {
         <?php include 'sidebar.php' ?>
         <div class="content">
             <div class="selection-table">
-                <a href="?filter=display" class="selection-card <?= $active_filter === 'display' ? 'active' : '' ?>">
-                    <p>Display</p>
-                </a>
-                <a href="?filter=warehose" class="selection-card <?= $active_filter === 'warehose' ? 'active' : '' ?>">
-                    <p>Warehouse</p>
-                </a>
+                <div class="selection-header">
+                    <div class="filter-buttons">
+                        <a href="?filter=display"
+                            class="selection-card <?= $active_filter === 'display' ? 'active' : '' ?>">
+                            <p>Display</p>
+                        </a>
+                        <a href="?filter=warehouse"
+                            class="selection-card <?= $active_filter === 'warehouse' ? 'active' : '' ?>">
+                            <p>Warehouse</p>
+                        </a>
+                    </div>
+                    <div class="add-product">
+                        <a href="add_new_product.php">ADD NEW PRODUCT</a>
+                        <a href="#">ADD PRODUCT</a>
+                    </div>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -64,13 +77,13 @@ if (isset($_GET['filter'])) {
                         if ($result && $result->num_rows > 0) {
                             while ($d = $result->fetch_assoc()) {
                                 ?>
-                        <tr>
-                            <td><?= $no++ ?></td>
-                            <td><?= htmlspecialchars($d['Name']) ?></td>
-                            <td><?= number_format($d['Price']) ?></td>
-                            <td><?= htmlspecialchars($d['Description']) ?></td>
-                            <td><?= $d['Stock'] ?></td>
-                        </tr>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= htmlspecialchars($d['Name']) ?></td>
+                                    <td><?= number_format($d['Price'], 2) ?></td>
+                                    <td><?= htmlspecialchars($d['Description']) ?></td>
+                                    <td><?= $d['Stock'] ?></td>
+                                </tr>
                                 <?php
                             }
                         } else {
