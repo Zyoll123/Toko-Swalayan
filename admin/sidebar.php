@@ -12,6 +12,6 @@
         <a href="users.php">Users</a>
     </div>
     <div class="log-out">
-        <a href="#">Log Out</a>
+        <a href="../aksi/logout.php">Log Out</a>
     </div>
 </div>

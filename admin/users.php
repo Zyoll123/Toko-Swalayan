@@ -54,8 +54,8 @@ if (isset($_GET['filter'])) {
                         </a>
                     </div>
                     <div class="add-users">
-                        <a href="#">ADD NEW ADMIN</a>
-                        <a href="#">ADD NEW CASHIER</a>
+                        <a href="add_new_admin.php">ADD NEW ADMIN</a>
+                        <a href="add_new_cashier.php">ADD NEW CASHIER</a>
                     </div>
                 </div>
                 <table>
