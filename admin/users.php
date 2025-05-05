@@ -81,8 +81,9 @@ if (isset($_GET['filter'])) {
                                     <td><?= htmlspecialchars($d['Email']) ?></td>
                                     <td><?= htmlspecialchars($d['Role']) ?></td>
                                     <td class="action-buttons">
-                                        <a href="#" class="btn edit">Update</a>
-                                        <a href="#" class="btn delete">Delete</a>
+                                        <a href="update_users.php?Id=<?= $d['Id']; ?>" class="btn edit">Update</a>
+                                        <a href="delete_users.php?Id=<?= $d['Id']; ?>" class="btn delete"
+                                            onclick="return confirm('Apakah anda yakin ingin menghapus user ini?')">Delete</a>
                                     </td>
                                 </tr>
                                 <?php

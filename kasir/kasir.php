@@ -56,7 +56,7 @@ $customer = isset($_GET['customer']) ? $_GET['customer'] : '';
                                     <div class="input-number-container">
                                         <button type="button" class="minusBtn">-</button>
                                         <input type="number" class="number-input" name="quantity[<?php echo $row['Id'] ?>]"
-                                            value="0" min="0" max="100" price-data="<?php echo $row['Price'] ?>" required>
+                                            value="1" min="1" max="<?= $row['Stock'] ?>" price-data="<?php echo $row['Price'] ?>" oninput="validateQuantity(this)" required>
                                         <button type="button" class="plusBtn">+</button>
                                     </div>
                                     <div class="added-product-transaction">

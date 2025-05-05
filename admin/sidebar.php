@@ -6,6 +6,9 @@
         <a href="index.php">Dashboard</a>
     </div>
     <div class="side-bar-item">
+        <a href="transaction.php">Transactions</a>
+    </div>
+    <div class="side-bar-item">
         <a href="products.php">Products</a>
     </div>
     <div class="side-bar-item">

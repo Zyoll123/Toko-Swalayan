@@ -69,6 +69,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.minusBtn').forEach((button) => {
             button.addEventListener('click', (e) => {
                 const input = e.target.parentElement.querySelector('.number-input')
+                const max = parseInt(input.getAttribute('max'))
+                let value = parseInt(input.value)
                 if (input.value === '' || isNaN(input.value)) {
                     input.value = 0
                 }
@@ -99,7 +101,19 @@ document.addEventListener('DOMContentLoaded', function () {
     setupQuantityButtons()
     restoreInputValues()
     updateTotalHarga()
+    validateQuantity()
 })
+
+function validateQuantity(input) {
+    const maxStock = parseInt(input.getAttribute('max'))
+    let value = parseint(input.value)
+
+    if (isNaN(value) || value < 1) {
+        input.value = 1
+    } else if (value > maxStock) {
+        input.value = maxStock;
+    }
+}
 
 function updateClock() {
     const now = new Date()

@@ -8,18 +8,34 @@ if (!isset($_SESSION['Name'])) {
 $adminName = $_SESSION['Name'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $Name = mysqli_real_escape_string($conn, $_POST['Name']);
-    $Email = mysqli_real_escape_string($conn, $_POST['Email']);
-    $Password = mysqli_real_escape_string($conn, $_POST['Password']);
+    $Name = trim($_POST['Name'] ?? '');
+    $Email = trim($_POST['Email'] ?? '');
+    $Password = trim($_POST['Password'] ?? '');
 
-    $query = "INSERT INTO accounts (Name, Email, Role, Password)
-            VALUES ('$Name', '$Email', 'Admin', '$Password')";
+    $errors = [];
+    if (empty($Name))
+        $errors[] = "Nama harus diisi";
+    if (empty($Email))
+        $errors[] = "Email harus diisi";
+    if (!filter_var($Email, FILTER_VALIDATE_EMAIL))
+        $errors[] = "Format email tidak valid.";
 
-    if (mysqli_query($conn, $query)) {
-        header("Location: users.php");
-        exit;
+    if (empty($errors)) {
+        $query = "INSERT INTO accounts (Name, Email, Role, Password)
+        VALUES (?, ?, 'Admin', ?)";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, "sss", $Name, $Email, $Password);
+
+        if (mysqli_stmt_execute($stmt)) {
+            header("Location: users.php");
+            exit();
+        } else {
+            echo "Error: " . mysqli_error($conn);
+        }
     } else {
-        echo "Error: " . mysqli_error($conn);
+        foreach ($errors as $error) {
+            echo "<p>$error</p>";
+        }
     }
 }
 
@@ -49,15 +65,19 @@ $conn->close();
                         oninput="toggleLabel(this)" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-input" name="Email" id="email" placeholder="Enter Email" oninput="toggleLabel(this)" required>
+                    <input type="email" class="form-input" name="Email" id="email" placeholder="Enter Email"
+                        oninput="toggleLabel(this)" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-input" name="Password" id="password" placeholder="Enter Password" oninput="toggleLabel(this)" required>
+                    <input type="password" class="form-input" name="Password" id="password" placeholder="Enter Password"
+                        oninput="toggleLabel(this)" required>
                 </div>
                 <button type="submit">ADD</button>
             </form>
         </div>
     </div>
+
+    <script src="js/add_new_product.js"></script>
 </body>
 
 </html>
