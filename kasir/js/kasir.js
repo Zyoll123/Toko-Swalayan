@@ -54,14 +54,35 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function validateQuantity(input) {
+        const maxStock = parseInt(input.getAttribute('max'))
+        let value = parseint(input.value)
+    
+        if (isNaN(value) || value < 1) {
+            input.value = 1
+        } else if (value > maxStock) {
+            input.value = maxStock;
+            alert(`Stock tersisa hanya ${maxStock}`)
+        }
+
+        updateTotalHarga()
+    }
+
     function setupQuantityButtons() {
         document.querySelectorAll('.plusBtn').forEach((button) => {
             button.addEventListener('click', (e) => {
                 const input = e.target.parentElement.querySelector('.number-input')
+                const maxStock = parseInt(input.getAttribute('max'))
                 if (input.value === '' || isNaN(input.value)) {
-                    input.value = 0
+                    input.value = 1
+                } else if (parseInt(input.value) >= maxStock) {
+                    alert(`Stock tersisa hanya ${maxStock}`)
+                    input.value = maxStock
+                } else {
+                    input.value = parseInt(input.value) + 1
                 }
-                input.value = parseInt(input.value) + 1
+                
+                validateQuantity(input)
                 updateTotalHarga()
             })
         })
@@ -72,12 +93,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 const max = parseInt(input.getAttribute('max'))
                 let value = parseInt(input.value)
                 if (input.value === '' || isNaN(input.value)) {
-                    input.value = 0
-                }
-                if (input.value > 0) {
+                    input.value = 1
+                } else if (input.value > 1) {
                     input.value = parseInt(input.value) - 1
-                    updateTotalHarga()
                 }
+                
+                validateQuantity(input)
+                updateTotalHarga()
+            })
+        })
+
+        document.querySelectorAll('.number-input').forEach(input => {
+            input.addEventListener('change', function() {
+                validateQuantity(this)
+            })
+
+            input.addEventListener('input', function() {
+                validateQuantity(this)
             })
         })
     }
@@ -103,17 +135,6 @@ document.addEventListener('DOMContentLoaded', function () {
     updateTotalHarga()
     validateQuantity()
 })
-
-function validateQuantity(input) {
-    const maxStock = parseInt(input.getAttribute('max'))
-    let value = parseint(input.value)
-
-    if (isNaN(value) || value < 1) {
-        input.value = 1
-    } else if (value > maxStock) {
-        input.value = maxStock;
-    }
-}
 
 function updateClock() {
     const now = new Date()
