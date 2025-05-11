@@ -4,14 +4,26 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #ecf0f1;
     color: #2c3e50;
+    height: 100%;
+    overflow: hidden;
 }
 
 .container {
     display: flex;
     min-height: 100vh;
-    margin-top: 70px;
-    /* Tambahkan ini agar tidak tertimpa navbar */
 }
+
+.content {
+    margin-right: 320px; /* agar tidak tertimpa panel kanan */
+    margin-top: 70px; /* agar tidak tertabrak navbar */
+    padding: 30px;
+    flex: 1;
+    background-color: #f9f9f9;
+    height: calc(100vh - 70px);
+    /* overflow-y: auto; */
+}
+
+
 
 *,
 *::before,
@@ -68,78 +80,103 @@ body {
     background-color: #c0392b;
 }
 
+.transaction-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
 
-/* Sidebar
-.side-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 100vh;
-    background-color: #2c3e50;
+.transaction-section form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.transaction-section .id-input,
+.transaction-section .search-input,
+.transaction-section .quantity-input,
+.transaction-section .added-product-transaction {
     display: flex;
     flex-direction: column;
-    padding: 20px 0;
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-    z-index: 100;
+    flex: 1 1 150px; /* agar responsif dan tetap rapih */
+    min-width: 120px;
 }
 
-.user-info {
-    color: #ecf0f1;
-    padding: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-bottom: 1px solid #34495e;
-    text-align: center;
-}
-
-.side-bar-item,
-.log-out {
-    padding: 10px 20px;
-}
-
-.side-bar-item a,
-.log-out a {
-    color: #ecf0f1;
-    text-decoration: none;
-    font-size: 16px;
-    display: block;
-    padding: 12px 20px;
-    transition: background-color 0.3s, color 0.3s;
+.transaction-section input {
+    padding: 10px 12px;
     border-radius: 6px;
-}
-
-.side-bar-item a:hover,
-.log-out a:hover {
-    background-color: #34495e;
-    color: #1abc9c;
-}
-
-.log-out {
-    margin-top: auto;
-} */
-
-/* Konten utama */
-.content {
-    margin-right: 320px;
-    /* Sesuai lebar .transaction-info */
-    padding: 30px;
-    flex: 1;
-    background-color: #f9f9f9;
-    overflow-y: auto;
-}
-
-
-.search-input {
-    margin-bottom: 20px;
-}
-
-.search-input input {
-    width: 100%;
-    padding: 12px 20px;
     border: 1px solid #ccc;
+    font-size: 14px;
+    width: 100%;
+}
+
+.transaction-section .added-product-transaction button {
+    padding: 10px;
+    background-color: #1abc9c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.transaction-section .added-product-transaction button:hover {
+    background-color: #16a085;
+}
+
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-between;
+    max-height: 400px; /* atau tinggi lain sesuai desain */
+    overflow-y: auto; /* Tambahkan scroll hanya di sini */
+    border: 1px solid #ccc;
+    margin-top: 10px;
     border-radius: 8px;
-    font-size: 16px;
+}
+
+
+.menu-container table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    font-size: 14px;
+}
+
+.menu-container thead {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+.menu-container th,
+.menu-container td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.menu-container tr:hover {
+    background-color: #f5f5f5;
+}
+
+tr.clickable-row {
+    cursor: pointer;
+}
+
+tr.clickable-row:hover {
+    background-color: #f5f5f5;
 }
 
 /* Menu produk */
@@ -150,73 +187,11 @@ body {
     /* Tambahkan jarak antar item */
     justify-content: space-between;
     /* Distribusi antar kolom */
-}
-
-.menu {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    width: calc(33.333% - 20px);
-    /* Tiga kolom per baris */
-    box-sizing: border-box;
-}
-
-
-.menu p {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.menu-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.menu-item img {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 6px;
-}
-
-.menu-info {
-    flex: 1;
-}
-
-.menu-info p {
-    margin: 4px 0;
-}
-
-.stock-product {
-    font-size: 13px;
-    color: #888;
-}
-
-.input-number-container {
-    display: flex;
-    align-items: center;
-    margin: 6px 0;
-}
-
-.input-number-container button {
-    padding: 4px 10px;
-    background-color: #2c3e50;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.input-number-container input {
-    width: 50px;
-    text-align: center;
-    margin: 0 5px;
+    max-height: 400px;
+    overflow: auto;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 4px;
+    margin-top: 10px;
+    border-radius: 8px;
 }
 
 .added-product-transaction button {
@@ -238,10 +213,12 @@ body {
 /* Transaction Info (Fixed Kanan) */
 .transaction-info {
     position: fixed;
-    top: 0;
+    display: flex;
+    flex-direction: column;
+    top: 70px; /* Ganti dari top: 0 */
     right: 0;
     width: 300px;
-    height: 100vh;
+    height: calc(100vh - 70px); /* Kurangi tinggi navbar */
     background-color: #ffffff;
     padding: 20px;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
@@ -249,6 +226,7 @@ body {
     flex-direction: column;
     z-index: 90;
 }
+
 
 .transaction-info input[type="text"] {
     padding: 10px;
@@ -276,25 +254,53 @@ body {
     color: #34495e;
 }
 
+/* Agar bagian cart-items bisa discroll */
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 400px; /* bisa kamu sesuaikan */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+
 .submit-transaction {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+}
+
+.submit-transaction input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
 }
 
 .submit-transaction button {
-    width: 100%;
-    padding: 12px;
-    background-color: #2c3e50;
-    color: #ecf0f1;
+    padding: 10px 20px;
+    background-color: #2e7d32;
+    color: #fff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: 100%;
 }
 
 .submit-transaction button:hover {
-    background-color: #34495e;
-    color: #1abc9c;
+    background-color: #1b5e20;
 }
+
+
 
 /* Responsive */
 @media (max-width: 1024px) {
@@ -337,6 +343,19 @@ body {
     }
 
     .menu {
+        width: 100%;
+    }
+
+    .transaction-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .transaction-section input {
+        width: 100%;
+    }
+
+    .transaction-section .added-product-transaction button {
         width: 100%;
     }
 }

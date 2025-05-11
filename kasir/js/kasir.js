@@ -1,139 +1,51 @@
 document.addEventListener('DOMContentLoaded', function () {
-    function saveInputValues() {
-        const inputs = document.querySelectorAll('.number-input')
-        const savedValues = {}
+    console.log('DOM fully loaded'); 
+    
 
-        inputs.forEach(input => {
-            const productId = input.name.match(/\[(\d+)\]/)[1]
-            savedValues[productId] = input.value
+    function setupRowClickHandlers() {
+        document.querySelectorAll('.clickable-row').forEach(row => {
+            row.addEventListener('click', function () {
+                const id = this.getAttribute('data-id')
+                const name = this.getAttribute('data-name')
+                const stock = this.getAttribute('data-stock')
+                const quantity = document.getElementById('Quantity')
+
+                document.getElementById('IdSearch').value = id;
+                document.getElementById('liveSearch').value = name;
+
+                quantity.max = stock
+                quantity.setAttribute('max', stock)
+
+                if (parseInt(quantity.value) > stock) {
+                    quantity.value = stock
+                }
+
+                document.getElementById('Quantity').focus()
+            })
         })
-
-        sessionStorage.setItem('savedInputValues', JSON.stringify(savedValues))
     }
 
-    function restoreInputValues() {
-        const savedValues = JSON.parse(sessionStorage.getItem('savedInputValues') || '{}')
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const quantityInput = document.getElementById('Quantity')
+        const maxStock = parseInt(quantityInput.max) || 0
+        const quantity = parseInt(quantityInput.value) || 0
 
-        document.querySelectorAll('.number-input').forEach(input => {
-            const productId = input.name.match(/\[(\d+)\]/)[1]
-            if (savedValues[productId] && savedValues[productId] > 0) {
-                input.value = savedValues[productId]
-            }
-        })
-
-        updateTotalHarga()
-    }
-
-    const searchInput = document.getElementById('liveSearch')
-    let searchTimer
-
-    searchInput.addEventListener('input', function () {
-        clearTimeout(searchTimer)
-
-        searchTimer = setTimeout(() => {
-            const searchValue = this.value.trim()
-            updateSearchresult(searchValue)
-        }, 500);
+        if (quantity > maxStock) {
+            e.preventDefault()
+            alert(`Stock tidak mencukupi! Stock tersedia: ${maxStock}`)
+            quantityInput.value = maxStock
+            quantityInput.focus()
+        }
     })
 
-    function updateSearchresult(searchTerm) {
-        const url = new URL(window.location.href)
+    document.getElementById('liveSearch').addEventListener('input', function () {
+        document.getElementById('IdSearch').value = ''
+    })
 
-        if (searchTerm) {
-            url.searchParams.set('search', searchTerm)
-        } else {
-            url.searchParams.delete('search')
-        }
-
-        const scrollPosition = window.scrollY || window.pageYOffset
-        window.location.href = url.toString()
-
-        window.onload = function () {
-            window.scrollTo(0, scrollPosition)
-            restoreInputValues()
-        }
-    }
-
-    function validateQuantity(input) {
-        const maxStock = parseInt(input.getAttribute('max'))
-        let value = parseint(input.value)
-    
-        if (isNaN(value) || value < 1) {
-            input.value = 1
-        } else if (value > maxStock) {
-            input.value = maxStock;
-            alert(`Stock tersisa hanya ${maxStock}`)
-        }
-
-        updateTotalHarga()
-    }
-
-    function setupQuantityButtons() {
-        document.querySelectorAll('.plusBtn').forEach((button) => {
-            button.addEventListener('click', (e) => {
-                const input = e.target.parentElement.querySelector('.number-input')
-                const maxStock = parseInt(input.getAttribute('max'))
-                if (input.value === '' || isNaN(input.value)) {
-                    input.value = 1
-                } else if (parseInt(input.value) >= maxStock) {
-                    alert(`Stock tersisa hanya ${maxStock}`)
-                    input.value = maxStock
-                } else {
-                    input.value = parseInt(input.value) + 1
-                }
-                
-                validateQuantity(input)
-                updateTotalHarga()
-            })
-        })
-    
-        document.querySelectorAll('.minusBtn').forEach((button) => {
-            button.addEventListener('click', (e) => {
-                const input = e.target.parentElement.querySelector('.number-input')
-                const max = parseInt(input.getAttribute('max'))
-                let value = parseInt(input.value)
-                if (input.value === '' || isNaN(input.value)) {
-                    input.value = 1
-                } else if (input.value > 1) {
-                    input.value = parseInt(input.value) - 1
-                }
-                
-                validateQuantity(input)
-                updateTotalHarga()
-            })
-        })
-
-        document.querySelectorAll('.number-input').forEach(input => {
-            input.addEventListener('change', function() {
-                validateQuantity(this)
-            })
-
-            input.addEventListener('input', function() {
-                validateQuantity(this)
-            })
-        })
-    }
-    
-    function updateTotalHarga() {
-        let total = 0
-    
-        document.querySelectorAll('.number-input').forEach((input) => {
-            const quantity = parseInt(input.value) || 0
-            const price = parseInt(input.getAttribute('price-data')) || 0
-            total += quantity * price
-        })
-    
-        const totalElement = document.getElementById('total-price')
-        if (totalElement) {
-            totalElement.textContent = total.toLocaleString()
-        }
-        // document.getElementById('total-price').textContent = total.toLocaleString()
-    }
-
-    setupQuantityButtons()
-    restoreInputValues()
-    updateTotalHarga()
-    validateQuantity()
+    document.getElementById('IdSearch').addEventListener('input', function () {
+        document.getElementById('liveSearch').value = ''
+    })
+    setupRowClickHandlers()
 })
 
 function updateClock() {

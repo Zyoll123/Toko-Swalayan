@@ -9,7 +9,8 @@ include '../aksi/koneksi.php';
 
 $kasirName = $_SESSION['Name'];
 $search = isset($_GET['search']) ? $_GET['search'] : '';
-$customer = isset($_GET['customer']) ? $_GET['customer'] : '';
+$idSearch = isset($_GET['idSearch']) ? $_GET['idSearch'] : '';
+// $customer = isset($_GET['customer']) ? $_GET['customer'] : '';
 
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
@@ -81,62 +82,80 @@ if (isset($_POST['remove_item'])) {
     <div class="container">
 
         <div class="content">
-            <div class="search-input">
-                <input type="text" id="liveSearch" placeholder="Search" name="search"
-                    value="<?php echo htmlspecialchars($search) ?>" autocomplete="off" required>
+            <div class="transaction-section">
+                <form action="" method="post">
+                    <div class="id-input">
+                        <input type="number" name="idSearch" id="IdSearch" placeholder="Id"
+                            value="<?= htmlspecialchars($idSearch) ?>">
+                    </div>
+                    <div class="search-input">
+                        <input type="text" id="liveSearch" placeholder="Name" name="search"
+                            value="<?php echo htmlspecialchars($search) ?>" autocomplete="off" required>
+                    </div>
+                    <div class="quantity-input">
+                        <input type="number" name="quantity" id="Quantity" min="1" placeholder="Qty" required>
+                    </div>
+                    <div class="added-product-transaction">
+                        <button type="submit">ADD</button>
+                    </div>
+                </form>
             </div>
 
             <div class="menu-container">
-                <?php
-                $query = "SELECT * FROM products";
-                if (!empty($search)) {
-                    $query .= " WHERE Name LIKE '" . $conn->real_escape_string($search) . "%'";
-                }
-                $result_product = $conn->query($query);
-
-                if ($result_product && $result_product->num_rows > 0) {
-                    while ($row = $result_product->fetch_assoc()) {
-                        $format_price = number_format($row['Price'], 0, ',', '.');
-                        ?>
-                        <div class="menu">
-                            <p><?php echo $row['Name'] ?></p>
-                            <div class="menu-item">
-                                <img src="data:image/jpg;base64,<?php echo base64_encode($row['Image_Product']); ?>"
-                                    alt="<?php echo $row['Name']; ?>">
-                                <div class="menu-info">
-                                    <p>Rp <?php echo $format_price; ?></p>
-                                    <p class="stock-product">Stock: <?php echo $row['Stock'] ?></p>
-                                    <div class="input-number-container">
-                                        <button type="button" class="minusBtn">-</button>
-                                        <input type="number" class="number-input" name="quantity[<?php echo $row['Id'] ?>]"
-                                            value="1" min="1" max="<?= $row['Stock'] ?>"
-                                            price-data="<?php echo $row['Price'] ?>" stock-data="<?= $row['Price'] ?>"
-                                            oninput="validateQuantity(this)" required>
-                                        <button type="button" class="plusBtn">+</button>
-                                    </div>
-                                    <div class="added-product-transaction">
-                                        <button type="submit" class="addBtn">Add</button>
-                                    </div>
-                                    <?php
-
-
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>PRICE</th>
+                            <th>STOCK</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         <?php
-                    }
-                } else {
-                    echo "<p>Product not found.</p>";
-                }
+                        $query = "SELECT * FROM products";
+                        $where = [];
 
-                $conn->close();
-                ?>
+                        if (!empty($search)) {
+                            $where[] = "Name LIKE '" . $conn->real_escape_string($search) . "%'";
+                        }
+
+                        if (!empty($idSearch)) {
+                            $where[] = "Id = " . intval($idSearch);
+                        }
+
+                        if (!empty($where)) {
+                            $query .= " WHERE " . implode(" AND ", $where);
+                        }
+
+                        $result_product = $conn->query($query);
+
+                        if ($result_product && $result_product->num_rows > 0) {
+                            while ($row = $result_product->fetch_assoc()) {
+                                $format_price = number_format($row['Price'], 0, ',', '.');
+                                ?>
+                                <tr class="clickable-row" data-id="<?= $row['Id'] ?>"
+                                    data-name="<?= htmlspecialchars($row['Name']) ?>" data-stock="<?= $row['Stock'] ?>">
+                                    <td><?= $row['Id'] ?></td>
+                                    <td><?= htmlspecialchars($row['Name']) ?></td>
+                                    <td><?= $format_price ?></td>
+                                    <td><?= $row['Stock'] ?></td>
+                                </tr>
+                                <?php
+                            }
+                        } else {
+                            echo "<tr><td colspan='4'>No products found</td></tr>";
+                        }
+
+                        $conn->close();
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="transaction-info">
             <div class="cart-header">
-                <input type="text" placeholder="Customer">
+                <!-- <input type="text" placeholder="Customer"> -->
                 <p id="liveClock">Loading time...</p>
             </div>
             <div class="cart-items">
@@ -155,8 +174,14 @@ if (isset($_POST['remove_item'])) {
                 <?php } ?>
             </div>
             <div class="submit-transaction">
-                <button type="submit">Submit</button>
+                <div class="input-uang">
+                    <input type="number" name="Money_Paid" id="uangDibayar" placeholder="Masukkan jumlah uang" required>
+                </div>
+                <div class="submit-btn">
+                    <button type="submit">Submit</button>
+                </div>
             </div>
+
         </div>
 
     </div>
