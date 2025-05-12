@@ -11,17 +11,22 @@ body {
 .container {
     display: flex;
     min-height: 100vh;
+    padding-top: 70px;
 }
 
 .content {
-    margin-right: 320px; /* agar tidak tertimpa panel kanan */
-    margin-top: 70px; /* agar tidak tertabrak navbar */
+    margin-top: 0;
+    /* Hapus margin-top */
+    padding-top: 0;
+    /* Hapus padding-top jika tidak ingin ada jarak sama sekali */
+    margin-right: 320px;
     padding: 30px;
     flex: 1;
     background-color: #f9f9f9;
     height: calc(100vh - 70px);
-    /* overflow-y: auto; */
+    overflow-y: auto;
 }
+
 
 
 
@@ -44,7 +49,8 @@ body {
     color: #ecf0f1;
     padding: 15px 30px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: sticky;
+    position: fixed;
+    width: 100%;
     top: 0;
     z-index: 999;
 }
@@ -104,7 +110,8 @@ body {
 .transaction-section .added-product-transaction {
     display: flex;
     flex-direction: column;
-    flex: 1 1 150px; /* agar responsif dan tetap rapih */
+    flex: 1 1 150px;
+    /* agar responsif dan tetap rapih */
     min-width: 120px;
 }
 
@@ -137,12 +144,13 @@ body {
     flex-wrap: wrap;
     gap: 30px;
     justify-content: space-between;
-    max-height: 400px; /* atau tinggi lain sesuai desain */
-    overflow-y: auto; /* Tambahkan scroll hanya di sini */
+    max-height: 400px;
+    overflow: auto;
     border: 1px solid #ccc;
     margin-top: 10px;
     border-radius: 8px;
 }
+
 
 
 .menu-container table {
@@ -151,7 +159,7 @@ body {
     background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     font-size: 14px;
 }
 
@@ -213,19 +221,19 @@ tr.clickable-row:hover {
 /* Transaction Info (Fixed Kanan) */
 .transaction-info {
     position: fixed;
-    display: flex;
-    flex-direction: column;
-    top: 70px; /* Ganti dari top: 0 */
     right: 0;
+    top: 70px;
     width: 300px;
-    height: calc(100vh - 70px); /* Kurangi tinggi navbar */
+    height: calc(100vh - 70px);
     background-color: #ffffff;
+    border-left: 1px solid #ddd;
     padding: 20px;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
-    z-index: 90;
+    justify-content: space-between;
 }
+
 
 
 .transaction-info input[type="text"] {
@@ -258,7 +266,8 @@ tr.clickable-row:hover {
 .cart-items {
     flex: 1;
     overflow-y: auto;
-    max-height: 400px; /* bisa kamu sesuaikan */
+    max-height: 400px;
+    /* bisa kamu sesuaikan */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -300,6 +309,35 @@ tr.clickable-row:hover {
     background-color: #1b5e20;
 }
 
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item-remove {
+    background-color: transparent;
+    color: #e74c3c;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.cart-item-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #2c3e50;
+}
+
+.cart-item-price,
+.cart-item-subtotal {
+    font-size: 14px;
+    color: #555;
+}
+
+
 
 
 /* Responsive */
@@ -320,6 +358,17 @@ tr.clickable-row:hover {
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
+        padding-top: 70px;
+    }
+
+    .transaction-info {
+        position: relative;
+        width: 100%;
+        height: auto;
+        top: unset;
+        right: unset;
+        border-left: none;
+        box-shadow: none;
     }
 
     .side-bar {
@@ -332,14 +381,6 @@ tr.clickable-row:hover {
         margin-left: 0;
         margin-right: 0;
         padding: 20px;
-    }
-
-    .transaction-info {
-        position: relative;
-        width: 100%;
-        height: auto;
-        box-shadow: none;
-        margin-top: 20px;
     }
 
     .menu {

@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($result->num_rows == 1) {
                 $user = $result->fetch_assoc();
+                $_SESSION['accounts'] = $user['accounts'];
                 $_SESSION['Id'] = $user['Id'];
                 $_SESSION['Name'] = $user['Name'];
                 $_SESSION['Role'] = $user['Role'];
