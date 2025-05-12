@@ -8,10 +8,9 @@ if (!isset($_SESSION['Name'])) {
 
 $adminName = $_SESSION['Name'];
 
-$query = "SELECT transactions.Id, transactions.Transaction_Date, transactions.Total, transactions.Money_Paid, transactions.Change, accounts.Name AS Cashier_Name, customers.Name AS Customers_Name
+$query = "SELECT transactions.Id, transactions.Transaction_Date, transactions.Total, transactions.Money_Paid, transactions.Change, accounts.Name AS Cashier_Name
         FROM transactions
-        JOIN accounts ON transactions.Employee_Id = accounts.Id
-        JOIN customers ON transactions.Customer_Id = customers.Id";
+        JOIN accounts ON transactions.Employee_Id = accounts.Id";
 
 ?>
 
@@ -40,7 +39,6 @@ $query = "SELECT transactions.Id, transactions.Transaction_Date, transactions.To
                             <th>Money Paid</th>
                             <th>Change</th>
                             <th>Cashier Name</th>
-                            <th>Customer Name</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,14 +49,13 @@ $query = "SELECT transactions.Id, transactions.Transaction_Date, transactions.To
                             while ($d = $result->fetch_assoc()) {
                                 ?>
                                 <tr>
-                                    <td><?= $no ?></td>
+                                    <td><?= $no++ ?></td>
                                     <td><?= htmlspecialchars($d['Id']) ?></td>
                                     <td><?= htmlspecialchars($d['Transaction_Date']) ?></td>
                                     <td><?= htmlspecialchars($d['Total']) ?></td>
                                     <td><?= htmlspecialchars($d['Money_Paid']) ?></td>
                                     <td><?= htmlspecialchars($d['Change']) ?></td>
                                     <td><?= htmlspecialchars($d['Cashier_Name']) ?></td>
-                                    <td><?= htmlspecialchars($d['Customer_Name']) ?></td>
                                 </tr>
                                 <?php
                             }

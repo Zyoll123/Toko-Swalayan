@@ -6,7 +6,7 @@ if (!isset($_SESSION['Name'])) {
     exit;
 }
 
-$user = $_SESSION['accounts'];
+$id_kasir = $_SESSION['Id'];
 $kasirName = $_SESSION['Name'];
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $idSearch = isset($_GET['idSearch']) ? $_GET['idSearch'] : '';
@@ -29,7 +29,7 @@ if (isset($_POST['add_to_cart'])) {
                 $new_qty = $item['Quantity'] + $Quantity;
                 if ($result_product['Stock'] >= $new_qty) {
                     $_SESSION['cart'][$key]['Quantity'] = $new_qty;
-                    $_SESSION['cart'][$key]['Total'] = $result_product['Price'] * $new_qty;
+                    $_SESSION['cart'][$key]['Subtotal'] = $result_product['Price'] * $new_qty;
                     $found = true;
                 } else {
                     echo "<script>alert('Stock tidak cukup!');</script>";
@@ -68,8 +68,7 @@ if (isset($_POST['checkout'])) {
     $tanggal = date("Y-m-d H:i:s");
     if ($total_uang >= $total_belanja) {
         $kembalian = $total_uang - $total_belanja;
-        $id_kasir = $user['Id'];
-        mysqli_query($conn, "INSERT INTO transactions (Transaction_Date, Total, Money_Paid, Change, Employee_Id)
+        mysqli_query($conn, "INSERT INTO transactions (Transaction_Date, Total, Money_Paid, `Change`, Employee_Id)
         VALUES ('$tanggal', '$total_belanja', '$total_uang', '$kembalian', '$id_kasir')");
         $transaction_id = mysqli_insert_id($conn);
         foreach ($_SESSION['cart'] as $item) {
@@ -83,7 +82,7 @@ if (isset($_POST['checkout'])) {
         }
 
         $invoice = [
-            "kasir" => $user['Name'],
+            "kasir" => $kasirName,
             "tanggal" => $tanggal,
             "total_belanja" => $total_belanja,
             "total_uang" => $total_uang,
@@ -235,7 +234,8 @@ if (isset($_POST['checkout'])) {
                     <span>Rp<?= number_format($total_keranjang, 0, ",", ".") ?></span>
                 </div>
                 <form action="" method="post">
-                    <input type="number" name="total_uang" id="total_uang" placeholder="Masukkan jumlah uang" class="payment-input" required>
+                    <input type="number" name="total_uang" id="total_uang" placeholder="Masukkan jumlah uang"
+                        class="payment-input" required>
                     <button type="submit" name="checkout" class="checkout-btn" <?= empty($_SESSION['cart']) ? 'disabled' : '' ?>>
                         <i class="fa fa-check-circle"></i>Proses Pembayaran
                     </button>
@@ -243,7 +243,7 @@ if (isset($_POST['checkout'])) {
             </div>
 
         </div>
-        <!-- <div class="modal" id="myModal">
+        <div class="modal" id="myModal" style="display: <?= $invoice ? 'block' : 'none' ?>;">
             <div class="modal-content">
                 <div class="invoice">
                     <div class="invoice-header">
@@ -271,7 +271,7 @@ if (isset($_POST['checkout'])) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($invoice['items'] as $item) { ?>
+                                <?php foreach ($invoice['items'] as $item) { ?>
                                     <tr>
                                         <td><?= $item['Name'] ?></td>
                                         <td><?= $item['Quantity'] ?></td>
@@ -297,12 +297,34 @@ if (isset($_POST['checkout'])) {
                             <span>Rp<?= number_format($invoice['kembalian'], 0, ",", ".") ?></span>
                         </div>
                     </div>
+
+                    <div class="invoice-footer">
+                        <p>Terima kasih atas kunjungan anda!</p>
+                        <p>Barang yang sudah dibeli tidak dapat dikembalikan.</p>
+                    </div>
+
+                    <div class="invoice-action">
+                        <button onclick="window.print()" class="invoice-btn btn-print">
+                            <i class="fa-solid fa-print"></i>Print
+                        </button>
+                        <button onclick="resetTransaction()" class="invoice-btn btn-transaction">
+                            <i class="fas fa-redo"></i>Transaksi Baru
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div> -->
+        </div>
 
     </div>
     <script src="js/kasir.js"></script>
+    <script>
+        function resetTransaction() {
+            var modal = document.getElementById('myModal')
+            if (modal) {
+                modal.style.display = 'none'
+            }
+        }
+    </script>
 </body>
 
 </html>

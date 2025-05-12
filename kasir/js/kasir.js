@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('IdSearch').addEventListener('input', function () {
         document.getElementById('liveSearch').value = ''
     })
+
     setupRowClickHandlers()
 })
 
