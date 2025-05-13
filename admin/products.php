@@ -34,7 +34,7 @@ if (isset($_GET['filter'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>PRODUCTS</title>
     <link rel="stylesheet" href="style/products.css">
 </head>
 
@@ -56,7 +56,7 @@ if (isset($_GET['filter'])) {
                     </div>
                     <div class="add-product">
                         <a href="add_new_product.php">ADD NEW PRODUCT</a>
-                        <a href="#">ADD PRODUCT</a>
+                        <a href="add_stock_product.php">ADD PRODUCT</a>
                     </div>
                 </div>
                 <table>

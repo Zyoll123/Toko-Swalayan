@@ -1,0 +1,172 @@
+/* Reset dan dasar */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+}
+
+
+/* Sidebar */
+.side-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.user-info {
+    color: #ecf0f1;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #34495e;
+    text-align: center;
+}
+
+.side-bar-item,
+.log-out {
+    padding: 10px 20px;
+}
+
+.side-bar-item a,
+.log-out a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 12px 20px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 6px;
+}
+
+.side-bar-item a:hover,
+.log-out a:hover {
+    background-color: #34495e;
+    color: #1abc9c;
+}
+
+.log-out {
+    margin-top: auto;
+}
+
+/* Konten utama */
+.content {
+    margin-left: 250px; /* ruang untuk sidebar */
+    padding: 40px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* agar vertikal tengah */
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+
+.title h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #1abc9c;
+    border-bottom: 2px solid #1abc9c;
+    padding-bottom: 10px;
+}
+
+/* Form Styling */
+form {
+    background: linear-gradient(to bottom right, #ffffff, #f1f1f1);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Input dan Select Styling */
+input.form_input,
+select {
+    padding: 14px 16px 14px 48px;
+    font-size: 16px;
+    border: 1px solid #bdc3c7;
+    border-radius: 12px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-color: #fff;
+    color: #2c3e50;
+}
+
+input.form_input:focus,
+select:focus {
+    outline: none;
+    border-color: #1abc9c;
+    box-shadow: 0 0 0 4px rgba(26, 188, 156, 0.2);
+}
+
+/* Placeholder */
+input::placeholder {
+    color: #95a5a6;
+}
+
+/* Label */
+label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+/* Ikon dalam Input */
+.form-group::before {
+    content: '📦';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);    
+    font-size: 18px;
+    color: #7f8c8d;
+    pointer-events: none;
+}
+
+.form-group:nth-of-type(2)::before {
+    content: '🛒';
+}
+
+/* Tombol */
+button[type="submit"] {
+    padding: 14px 0;
+    font-size: 16px;
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 18px rgba(26, 188, 156, 0.3);
+}
+
+button[type="submit"]:hover {
+    background-color: #16a085;
+    transform: scale(1.03);
+}
