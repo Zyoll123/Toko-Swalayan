@@ -62,9 +62,6 @@ $conn->close();
             </div>
             <form action="" method="post">
                 <div class="form-group">
-                    <input type="number" class="form_input" name="Stock" id="stock" placeholder="Enter Stock">
-                </div>
-                <div class="form-group">
                     <label for="product_id">Choose Product</label>
                     <select name="Product_Id" id="product_id">
                         <option value="">--Choose Product--</option>
@@ -74,6 +71,9 @@ $conn->close();
                         }
                         ?>
                     </select>
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form_input" name="Stock" id="stock" placeholder="Enter Stock">
                 </div>
                 <button type="submit">ADD</button>
             </form>

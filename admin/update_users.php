@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php include 'sidebar.php' ?>
         <div class="content">
             <div class="title">
-                <h1>Update Users</h1>
+                <h1>Update User</h1>
             </div>
             <form action="" method="post">
                 <div class="form-group">

@@ -19,7 +19,7 @@ if (isset($_GET['filter'])) {
         $query = "SELECT * FROM products";
         $active_filter = 'display';
     } elseif ($filter === 'warehouse') {
-        $query = "SELECT products.Name, products.Price, products.Description, warehouses.Stock
+        $query = "SELECT products.Name, products.Price, products.Description, warehouses.Stock, warehouses.Id
                 FROM warehouses
                 INNER JOIN products ON warehouses.Product_Id = products.Id
                 WHERE warehouses.Stock > 0 ";
@@ -67,6 +67,7 @@ if (isset($_GET['filter'])) {
                             <th>Price</th>
                             <th>Description</th>
                             <th>Stock</th>
+                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,11 +84,21 @@ if (isset($_GET['filter'])) {
                                     <td><?= number_format($d['Price'], 2) ?></td>
                                     <td><?= htmlspecialchars($d['Description']) ?></td>
                                     <td><?= $d['Stock'] ?></td>
+                                    <td class="action-buttons">
+                                        <?php if ($active_filter == 'display'): ?>
+                                            <a href="update_product.php?Id=<?= $d['Id']; ?>" class="btn edit">Update</a>
+                                            <a href="delete_product.php?Id=<?= $d['Id']; ?>" class="btn delete"
+                                                onclick="return confirm('Apakah anda yakin ingin menghapus product ini?')">Delete</a>
+                                        <?php elseif ($active_filter == 'warehouse'): ?>
+                                            <a href="delete_warehouse_stock.php?Id=<?= $d['Id']; ?>" class="btn delete"
+                                                onclick="return confirm('Apakah anda yakin ingin menghapus product ini?')">Delete</a>
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>
                                 <?php
                             }
                         } else {
-                            echo "<tr><td colspan='5'>No products found</td></tr>";
+                            echo "<tr><td colspan='6'>No products found</td></tr>";
                         }
                         ?>
                     </tbody>
