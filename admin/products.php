@@ -92,6 +92,10 @@ if (isset($_GET['filter'])) {
                                         <?php elseif ($active_filter == 'warehouse'): ?>
                                             <a href="delete_warehouse_stock.php?Id=<?= $d['Id']; ?>" class="btn delete"
                                                 onclick="return confirm('Apakah anda yakin ingin menghapus product ini?')">Delete</a>
+                                        <?php else: ?>
+                                            <a href="update_product.php?Id=<?= $d['Id']; ?>" class="btn edit">Update</a>
+                                            <a href="delete_product.php?Id=<?= $d['Id']; ?>" class="btn delete"
+                                                onclick="return confirm('Apakah anda yakin ingin menghapus product ini?')">Delete</a>
                                         <?php endif; ?>
                                     </td>
                                 </tr>

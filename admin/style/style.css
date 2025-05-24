@@ -11,6 +11,19 @@ body {
     min-height: 100vh;
 }
 
+.content {
+    margin-top: 0;
+    /* Hapus margin-top */
+    padding-top: 0;
+    /* Hapus padding-top jika tidak ingin ada jarak sama sekali */
+    /* margin-right: 320px; */
+    /* padding: 30px; */
+    flex: 1;
+    background-color: #f9f9f9;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+}
+
 /* Sidebar */
 .side-bar {
     position: fixed;
@@ -104,6 +117,26 @@ body {
     font-size: 32px;
     font-weight: bold;
     color: #1abc9c;
+}
+
+.card-chart {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-chart h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.chart-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
 }
 
 @media (max-width: 768px) {

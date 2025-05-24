@@ -24,22 +24,49 @@ $query_income->bind_param("s", $date);
 $query_income->execute();
 $result_income = $query_income->get_result();
 $total_income = $result_income->fetch_assoc()['income'] ?? 0;
+
+$query_chart = $conn->prepare("
+SELECT 
+DATE(Transaction_Date) AS date, 
+SUM(Total) AS daily_income 
+FROM transactions 
+WHERE Transaction_Date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) 
+GROUP BY 
+DATE(Transaction_Date) 
+ORDER BY 
+DATE(Transaction_Date) ASC
+");
+
+$query_chart->execute();
+$result_chart = $query_chart->get_result();
+
+$chart_labels = [];
+$chart_data = [];
+
+while ($row = $result_chart->fetch_assoc()) {
+    $chart_labels[] = $row['date'];
+    $chart_data[] = $row['daily_income'];
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
     <div class="container">
         <?php include 'sidebar.php' ?>
         <div class="content">
-            <div class="card-dashboard">
+            <!-- <div class="card-dashboard">
                 <div class="dashboard-section">
                     <h2><i class="fa-solid fa-user"></i>Total Users</h2>
                     <div class="card-info">
@@ -58,8 +85,62 @@ $total_income = $result_income->fetch_assoc()['income'] ?? 0;
                         <p><?= $total_income ?></p>
                     </div>
                 </div>
+            </div> -->
+
+            <div class="card-chart">
+                <h2><i class="fa-solid fa-chart-line"></i> Daily Income (Last 30 Days)</h2>
+                <div class="chart-container">
+                    <canvas id="incomeChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('incomeChart').getContext('2d');
+            const incomeChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: <?= json_encode($chart_labels) ?>,
+                    datasets: [{
+                        label: 'Daily Income',
+                        data: <?= json_encode($chart_data) ?>,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return 'Income: ' + context.parsed.y.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>
