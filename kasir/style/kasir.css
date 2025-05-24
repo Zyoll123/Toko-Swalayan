@@ -245,7 +245,6 @@ tr.clickable-row:hover {
     text-align: center;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #2c3e50;
 }
 
 .transaction-content {
@@ -343,14 +342,24 @@ tr.clickable-row:hover {
     font-size: 16px;
 }
 
+.cart-sub,
 .cart-Total {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
-    font-weight: 600;
-    font-size: 18px;
+    font-size: 14px;
+    padding: 6px 8px;
+    border-bottom: 1px solid #eee;
     color: #2c3e50;
 }
+
+.cart-Total {
+    font-weight: bold;
+    color: #27ae60;
+    border-top: 1px solid #ccc;
+    margin-top: 6px;
+    padding-top: 8px;
+}
+
 
 .cart-Total span:first-child {
     color: #34495e;

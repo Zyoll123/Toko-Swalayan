@@ -65,11 +65,13 @@ $invoice = null;
 if (isset($_POST['checkout'])) {
     $total_uang = $_POST['total_uang'];
     $total_belanja = array_sum(array_column($_SESSION['cart'], 'Subtotal'));
+    $ppn = $total_belanja * 0.12;
+    $total = $total_belanja + $ppn;
     $tanggal = date("Y-m-d H:i:s");
-    if ($total_uang >= $total_belanja) {
-        $kembalian = $total_uang - $total_belanja;
-        mysqli_query($conn, "INSERT INTO transactions (Transaction_Date, Total, Money_Paid, `Change`, Employee_Id)
-        VALUES ('$tanggal', '$total_belanja', '$total_uang', '$kembalian', '$id_kasir')");
+    if ($total_uang >= $total) {
+        $kembalian = $total_uang - $total;
+        mysqli_query($conn, "INSERT INTO transactions (Transaction_Date, Subtotal, PPN, Total, Money_Paid, `Change`, Employee_Id)
+        VALUES ('$tanggal', '$total_belanja', '$ppn', '$total', '$total_uang', '$kembalian', '$id_kasir')");
         $transaction_id = mysqli_insert_id($conn);
         foreach ($_SESSION['cart'] as $item) {
             mysqli_query($conn, "INSERT INTO transaction_details (Quantity, Subtotal, Product_Id, Transaction_Id)
@@ -114,6 +116,7 @@ if (isset($_POST['checkout'])) {
             <h2>Nama Toko</h2>
         </div>
         <div class="kasir-info">
+            <p id="liveClock">Loading time...</p>
             <span><?php echo htmlspecialchars($kasirName); ?></span>
             <a href="../aksi/logout.php" class="logout-btn">Logout</a>
         </div>
@@ -193,10 +196,10 @@ if (isset($_POST['checkout'])) {
             </div>
         </div>
         <div class="transaction-info">
-            <div class="cart-header">
-                <!-- <input type="text" placeholder="Customer"> -->
+            <!-- <div class="cart-header">
+                <input type="text" placeholder="Customer">
                 <p id="liveClock">Loading time...</p>
-            </div>
+            </div> -->
             <div class="cart-items">
                 <?php if (empty($_SESSION['cart'])) { ?>
                     <div class="empty-cart">
@@ -224,11 +227,29 @@ if (isset($_POST['checkout'])) {
             </div>
             <div class="cart-summary">
                 <?php
-                $total_keranjang = 0;
-                foreach ($_SESSION['cart'] as $item) {
-                    $total_keranjang += $item['Subtotal'];
+                function hitungSubtotal()
+                {
+                    return isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'], 'Subtotal')) : 0;
                 }
+
+                function hitungPPN()
+                {
+                    $subtotal = hitungSubtotal();
+                    return $subtotal * 0.12;
+                }
+
+                $subtotal = hitungSubtotal();
+                $ppn = hitungPPN();
+                $total_keranjang = $subtotal + $ppn;
                 ?>
+                <div class="cart-sub">
+                    <span>Subtotal:</span>
+                    <span>Rp<?= number_format($subtotal, 0, ",", ".") ?></span>
+                </div>
+                <div class="cart-sub">
+                    <span>PPN(12%):</span>
+                    <span>Rp<?= number_format($ppn, 0, ",", ".") ?></span>
+                </div>
                 <div class="cart-Total">
                     <span>Total:</span>
                     <span>Rp<?= number_format($total_keranjang, 0, ",", ".") ?></span>
