@@ -32,15 +32,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 exit();
             } else {
-                echo "Name atau Password salah";
+                echo "<script>
+                    alert('Nama atau Password salah!');
+                    window.location.href = 'login.html';
+                    </script>";
+                // exit();
             }
-    
+
             $stmt->close();
         } else {
             echo "Terjadi kesalahan saat menyiapkan statement.";
         }
     } else {
-        echo "Name dan Password wajib diisi";
+        echo "<script>alert('Name dan Password wajib diisi!');</script>";
     }
 }
 

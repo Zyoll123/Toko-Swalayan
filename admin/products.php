@@ -9,14 +9,14 @@ include '../aksi/koneksi.php';
 
 $adminName = $_SESSION['Name'];
 
-$query = "SELECT * FROM products";
+$query = "SELECT * FROM products ORDER BY Stock ASC";
 $active_filter = 'all';
 
 if (isset($_GET['filter'])) {
     $filter = $_GET['filter'];
 
     if ($filter === 'display') {
-        $query = "SELECT * FROM products";
+        $query = "SELECT * FROM products ORDER BY Stock ASC";
         $active_filter = 'display';
     } elseif ($filter === 'warehouse') {
         $query = "SELECT products.Name, products.Price, products.Description, warehouses.Stock, warehouses.Id
@@ -62,7 +62,7 @@ if (isset($_GET['filter'])) {
                 <table>
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th>ID</th>
                             <th>Product Name</th>
                             <th>Price</th>
                             <th>Description</th>
@@ -72,14 +72,13 @@ if (isset($_GET['filter'])) {
                     </thead>
                     <tbody>
                         <?php
-                        $no = 1;
                         $result = $conn->query($query);
 
                         if ($result && $result->num_rows > 0) {
                             while ($d = $result->fetch_assoc()) {
                                 ?>
                                 <tr>
-                                    <td><?= $no++ ?></td>
+                                    <td><?= $d['Id'] ?></td>
                                     <td><?= htmlspecialchars($d['Name']) ?></td>
                                     <td><?= number_format($d['Price'], 2) ?></td>
                                     <td><?= htmlspecialchars($d['Description']) ?></td>

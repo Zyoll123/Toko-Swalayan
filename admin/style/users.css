@@ -58,11 +58,11 @@ body {
 }
 
 .log-out {
-    margin-top: auto;
+    margin-top: 300px;
 }
 
 /* Konten utama */
-.content {
+.content {  
     margin-left: 250px;
     padding: 30px;
     flex: 1;
