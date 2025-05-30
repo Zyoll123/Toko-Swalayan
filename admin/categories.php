@@ -8,9 +8,7 @@ if (!isset($_SESSION['Name'])) {
 
 $adminName = $_SESSION['Name'];
 
-$query = "SELECT transactions.Id, transactions.Transaction_Date, transactions.Total, transactions.Money_Paid, transactions.Change, accounts.Name AS Cashier_Name
-        FROM transactions
-        JOIN accounts ON transactions.Employee_Id = accounts.Id";
+$query = "SELECT * FROM categories";
 
 ?>
 
@@ -20,8 +18,8 @@ $query = "SELECT transactions.Id, transactions.Transaction_Date, transactions.To
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAPORAN</title>
-    <link rel="stylesheet" href="style/transaction.css">
+    <title>KATEGORI</title>
+    <link rel="stylesheet" href="style/products.css">
 </head>
 
 <body>
@@ -29,36 +27,35 @@ $query = "SELECT transactions.Id, transactions.Transaction_Date, transactions.To
         <?php include 'sidebar.php' ?>
         <div class="content">
             <div class="title">
-                <h1>Laporan</h1>
+                <h1>Kategori</h1>
             </div>
             <div class="selection-table">
+                <div class="selection-header">
+                    <div class="add-product">
+                        <a href="add_new_category.php">TAMBAH KATEGORI BARU</a>
+                    </div>
+                </div>
                 <table>
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Id Transaction</th>
-                            <th>Transaction Date</th>
-                            <th>Total</th>
-                            <th>Money Paid</th>
-                            <th>Change</th>
-                            <th>Cashier Name</th>
+                            <th>Id</th>
+                            <th>Nama Kategori</th>
+                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $no = 1;
                         $result = $conn->query($query);
                         if ($result && $result->num_rows > 0) {
                             while ($d = $result->fetch_assoc()) {
                                 ?>
                                 <tr>
-                                    <td><?= $no++ ?></td>
-                                    <td><?= htmlspecialchars($d['Id']) ?></td>
-                                    <td><?= htmlspecialchars($d['Transaction_Date']) ?></td>
-                                    <td><?= htmlspecialchars($d['Total']) ?></td>
-                                    <td><?= htmlspecialchars($d['Money_Paid']) ?></td>
-                                    <td><?= htmlspecialchars($d['Change']) ?></td>
-                                    <td><?= htmlspecialchars($d['Cashier_Name']) ?></td>
+                                    <td><?= $d['Id'] ?></td>
+                                    <td><?= htmlspecialchars($d['Name']) ?></td>
+                                    <td class="action-buttons">
+                                        <a href="update_category.php?Id=<?= $d['Id'] ?>" class="btn edit">Update</a>
+                                        <a href="delete_category.php?Id=<?= $d['Id'] ?>" class="btn delete">Delete</a>
+                                    </td>
                                 </tr>
                                 <?php
                             }

@@ -19,14 +19,11 @@ if (isset($_GET['filter'])) {
         $query = "SELECT * FROM products ORDER BY Stock ASC";
         $active_filter = 'display';
     } elseif ($filter === 'warehouse') {
-        $query = "SELECT products.Name, products.Price, products.Description, warehouses.Stock, warehouses.Id
+        $query = "SELECT products.Name, products.Price, products.Description, warehouses.Stock, warehouses.Id, warehouses.Expired_Date
                 FROM warehouses
                 INNER JOIN products ON warehouses.Product_Id = products.Id
                 WHERE warehouses.Stock > 0 ";
         $active_filter = 'warehouse';
-    } elseif ($filter === 'category') {
-        $query = "SELECT * FROM categories";
-        $active_filter = 'category';
     }
 }
 ?>
@@ -45,6 +42,9 @@ if (isset($_GET['filter'])) {
     <div class="container">
         <?php include 'sidebar.php' ?>
         <div class="content">
+            <div class="title">
+                <h1>Management Produk</h1>
+            </div>
             <div class="selection-table">
                 <div class="selection-header">
                     <div class="filter-buttons">
@@ -54,37 +54,25 @@ if (isset($_GET['filter'])) {
                         </a>
                         <a href="?filter=warehouse"
                             class="selection-card <?= $active_filter === 'warehouse' ? 'active' : '' ?>">
-                            <p>Warehouse</p>
-                        </a>
-                        <a href="?filter=category"
-                            class="selection-card <?= $active_filter === 'category' ? 'active' : '' ?>">
-                            <p>Categories</p>
+                            <p>Gudang</p>
                         </a>
                     </div>
                     <div class="add-product">
-                        <a href="add_stock_product.php">ADD PRODUCT</a>
-                        <a href="add_new_product.php">ADD NEW PRODUCT</a>
-                        <a href="add_new_category.php">ADD NEW CATEGORY</a>
+                        <a href="add_new_product.php">TAMBAH PRODUK BARU</a>
+                        <a href="add_stock_product.php">TAMBAH STOK GUDANG</a>
                     </div>
                 </div>
                 <table>
                     <thead>
-                        <?php if ($active_filter == 'category'): ?>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Edit</th>
-                            </tr>
-                        <?php else: ?>
-                            <tr>
-                                <th>ID</th>
-                                <th>Product Name</th>
-                                <th>Price</th>
-                                <th>Description</th>
-                                <th>Stock</th>
-                                <th>Edit</th>
-                            </tr>
-                        <?php endif; ?>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Expired Date</th>
+                            <th>Stock</th>
+                            <th>Edit</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <?php
@@ -93,38 +81,28 @@ if (isset($_GET['filter'])) {
                         if ($result && $result->num_rows > 0) {
                             while ($d = $result->fetch_assoc()) {
                                 ?>
-                                <?php if ($active_filter == 'category'): ?>
-                                    <tr>
-                                        <td><?= $d['Id'] ?></td>
-                                        <td><?= htmlspecialchars($d['Name']) ?></td>
-                                        <td class="action-buttons">
-                                            <a href="update_category.php?Id=<?= $d['Id'] ?>" class="btn edit">Update</a>
-                                            <a href="delete_category.php?Id=<?= $d['Id'] ?>" class="btn delete">Delete</a>
-                                        </td>
-                                    </tr>
-                                <?php else: ?>
-                                    <tr>
-                                        <td><?= $d['Id'] ?></td>
-                                        <td><?= htmlspecialchars($d['Name']) ?></td>
-                                        <td><?= number_format($d['Price'], 2) ?></td>
-                                        <td><?= htmlspecialchars($d['Description']) ?></td>
-                                        <td><?= $d['Stock'] ?></td>
-                                        <td class="action-buttons">
-                                            <?php if ($active_filter == 'display'): ?>
-                                                <a href="update_product.php?Id=<?= $d['Id']; ?>" class="btn edit">Update</a>
-                                                <a href="delete_product.php?Id=<?= $d['Id']; ?>" class="btn delete"
-                                                    onclick="return confirm('Apakah anda yakin ingin menghapus product ini?')">Delete</a>
-                                            <?php elseif ($active_filter == 'warehouse'): ?>
-                                                <a href="delete_warehouse_stock.php?Id=<?= $d['Id']; ?>" class="btn delete"
-                                                    onclick="return confirm('Apakah anda yakin ingin menghapus product ini?')">Delete</a>
-                                            <?php else: ?>
-                                                <a href="update_product.php?Id=<?= $d['Id']; ?>" class="btn edit">Update</a>
-                                                <a href="delete_product.php?Id=<?= $d['Id']; ?>" class="btn delete"
-                                                    onclick="return confirm('Apakah anda yakin ingin menghapus product ini?')">Delete</a>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                <?php endif; ?>
+                                <tr>
+                                    <td><?= $d['Id'] ?></td>
+                                    <td><?= htmlspecialchars($d['Name']) ?></td>
+                                    <td><?= number_format($d['Price'], 2) ?></td>
+                                    <td><?= htmlspecialchars($d['Description']) ?></td>
+                                    <td><?= htmlspecialchars($d['Expired_Date']) ?></td>
+                                    <td><?= $d['Stock'] ?></td>
+                                    <td class="action-buttons">
+                                        <?php if ($active_filter == 'display'): ?>
+                                            <a href="update_product.php?Id=<?= $d['Id']; ?>" class="btn edit">Update</a>
+                                            <a href="delete_product.php?Id=<?= $d['Id']; ?>" class="btn delete"
+                                                onclick="return confirm('Apakah anda yakin ingin menghapus product ini?')">Delete</a>
+                                        <?php elseif ($active_filter == 'warehouse'): ?>
+                                            <a href="delete_warehouse_stock.php?Id=<?= $d['Id']; ?>" class="btn delete"
+                                                onclick="return confirm('Apakah anda yakin ingin menghapus product ini?')">Delete</a>
+                                        <?php else: ?>
+                                            <a href="update_product.php?Id=<?= $d['Id']; ?>" class="btn edit">Update</a>
+                                            <a href="delete_product.php?Id=<?= $d['Id']; ?>" class="btn delete"
+                                                onclick="return confirm('Apakah anda yakin ingin menghapus product ini?')">Delete</a>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
                                 <?php
                             }
                         } else {

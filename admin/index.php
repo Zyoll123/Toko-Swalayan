@@ -66,6 +66,9 @@ while ($row = $result_chart->fetch_assoc()) {
     <div class="container">
         <?php include 'sidebar.php' ?>
         <div class="content">
+            <div class="title">
+                <h1>Dashboard</h1>
+            </div>
             <!-- <div class="card-dashboard">
                 <div class="dashboard-section">
                     <h2><i class="fa-solid fa-user"></i>Total Users</h2>
@@ -88,9 +91,82 @@ while ($row = $result_chart->fetch_assoc()) {
             </div> -->
 
             <div class="card-chart">
-                <h2><i class="fa-solid fa-chart-line"></i> Daily Income (Last 30 Days)</h2>
+                <h2><i class="fa-solid fa-chart-line"></i> Pendapatan Harian (Last 30 Days)</h2>
                 <div class="chart-container">
                     <canvas id="incomeChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card-chart">
+                <h2>Stok Display</h2>
+                <div class="table-stock">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Nama Produk</td>
+                                <td>Stok</td>
+                                <td>Expired Date</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query = "SELECT * FROM products WHERE Stock <= 10";
+
+                            $result = $conn->query($query);
+                            if ($result && $result->num_rows > 0) {
+                                while ($d = $result->fetch_assoc()) {
+                                    ?>
+                                    <tr>
+                                        <td><?= $d['Id'] ?></td>
+                                        <td><?= htmlspecialchars($d['Name']) ?></td>
+                                        <td><?= $d['Stock'] ?></td>
+                                        <td><?= $d['Expired_Date'] ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-chart">
+                <h2>Stok Gudang</h2>
+                <div class="table-stock">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Nama Produk</td>
+                                <td>Stok</td>
+                                <td>Expired Date</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query = "SELECT warehouses.Id, products.Name, warehouses.Stock, warehouses.Expired_Date
+                                    FROM warehouses
+                                    INNER JOIN products ON warehouses.Product_Id = products.Id";
+
+                            $result = $conn->query($query);
+                            if ($result && $result->num_rows > 0) {
+                                while ($d = $result->fetch_assoc()) {
+                                    ?>
+                                    <tr>
+                                        <td><?= $d['Id'] ?></td>
+                                        <td><?= htmlspecialchars($d['Name']) ?></td>
+                                        <td><?= $d['Stock'] ?></td>
+                                        <td><?= $d['Expired_Date'] ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -104,7 +180,7 @@ while ($row = $result_chart->fetch_assoc()) {
                 data: {
                     labels: <?= json_encode($chart_labels) ?>,
                     datasets: [{
-                        label: 'Daily Income',
+                        label: 'Pendapatan harian',
                         data: <?= json_encode($chart_data) ?>,
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
@@ -115,6 +191,7 @@ while ($row = $result_chart->fetch_assoc()) {
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: {
                             position: 'top',

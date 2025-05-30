@@ -58,16 +58,32 @@ body {
 }
 
 .log-out {
-    margin-top: 300px;
+    margin-top: 200px;
 }
 
 /* Konten utama */
 .content {  
     margin-left: 250px;
-    padding: 30px;
+    padding: 20px;
     flex: 1;
     background-color: #f9f9f9;
     overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.title {
+    margin-bottom: 20px;
+}
+
+.title h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.title p {
+    font-size: 14px;
+    color: #666;
 }
 
 .selection-table {

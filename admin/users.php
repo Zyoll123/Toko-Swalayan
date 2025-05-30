@@ -38,6 +38,9 @@ if (isset($_GET['filter'])) {
     <div class="container">
         <?php include 'sidebar.php' ?>
         <div class="content">
+            <div class="title">
+                <h1>Management User</h1>
+            </div>
             <div class="selection-table">
                 <div class="selection-header">
                     <div class="filter-buttons">

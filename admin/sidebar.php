@@ -6,13 +6,16 @@
         <a href="index.php">Dashboard</a>
     </div>
     <div class="side-bar-item">
-        <a href="transaction.php">Transactions</a>
+        <a href="transaction.php">Laporan</a>
     </div>
     <div class="side-bar-item">
-        <a href="products.php">Products</a>
+        <a href="products.php">Produk</a>
     </div>
     <div class="side-bar-item">
-        <a href="users.php">Users</a>
+        <a href="categories.php">Ketegori</a>
+    </div>
+    <div class="side-bar-item">
+        <a href="users.php">User</a>
     </div>
     <div class="log-out">
         <a href="../aksi/logout.php">Log Out</a>
