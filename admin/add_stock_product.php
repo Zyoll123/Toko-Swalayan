@@ -10,6 +10,9 @@ $adminName = $_SESSION['Name'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stock = trim($_POST['Stock'] ?? '');
     $product_id = trim($_POST['Product_Id'] ?? '');
+    $price = mysqli_real_escape_string($conn, $_POST['Price'] ?? '');
+    $expired_date = mysqli_real_escape_string($conn, $_POST['Expired_Date'] ?? '');
+    $Harga_Jual = $price + ($price * 0.1);
 
     $errors = [];
     if (empty($stock))
@@ -19,12 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (empty($errors)) {
         $date = date("Y-m-d");
-        $expired_date = date("Y-m-d", strtotime("+1 year", strtotime($date)));
+        // $expired_date = date("Y-m-d", strtotime("+1 year", strtotime($date)));
 
-        $query = "INSERT INTO warehouses (Stock, Date_Added, Expired_Date, Product_Id)
-        VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO warehouses (Stock, Price, Harga_Jual, Date_Added, Expired_Date, Product_Id)
+        VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, "issi", $stock, $date, $expired_date, $product_id);
+        mysqli_stmt_bind_param($stmt, "iiissi", $stock, $price, $Harga_Jual, $date, $expired_date, $product_id);
 
         if (mysqli_stmt_execute($stmt)) {
             header("Location: products.php");
@@ -58,7 +61,7 @@ $conn->close();
         <?php include 'sidebar.php'; ?>
         <div class="content">
             <div class="title">
-                <h1>ADD STOCK PRODUCT</h1>
+                <h1>TAMBAH STOK GUDANG</h1>
             </div>
             <form action="" method="post">
                 <div class="form-group">
@@ -71,6 +74,13 @@ $conn->close();
                         }
                         ?>
                     </select>
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form_input" name="Price" id="price" placeholder="Enter Price">
+                </div>
+                <div class="form-group">
+                    <label for="expired_date">Input Expired Date</label>
+                    <input type="date" class="form_input" name="Expired_Date" id="expired_date" placeholder="Input Expired Date">
                 </div>
                 <div class="form-group">
                     <input type="number" class="form_input" name="Stock" id="stock" placeholder="Enter Stock">

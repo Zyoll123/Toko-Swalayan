@@ -110,3 +110,38 @@ th {
     background-color: #1abc9c;
     color: white;
 }
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.btn.edit {
+    background-color: #3498db;
+}
+
+.btn.edit:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.btn.delete {
+    background-color: #e74c3c;
+}
+
+.btn.delete:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}

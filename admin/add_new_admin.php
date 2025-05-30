@@ -65,7 +65,7 @@ $conn->close();
         <?php include 'sidebar.php' ?>
         <div class="content">
             <div class="title">
-                <h1>ADD NEW ADMIN</h1>
+                <h1>TAMBAH USER ADMIN</h1>
             </div>
             <form action="" method="post">
                 <div class="form-group">

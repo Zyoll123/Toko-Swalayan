@@ -11,21 +11,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $Name = mysqli_real_escape_string($conn, $_POST['Name']);
     $Price = mysqli_real_escape_string($conn, $_POST['Price']);
     $Stock = mysqli_real_escape_string($conn, $_POST['Stock']);
-    $Description = mysqli_real_escape_string($conn, $_POST['Description']);
+    // $Description = mysqli_real_escape_string($conn, $_POST['Description']);
     $Category_Id = mysqli_real_escape_string($conn, $_POST['Category_Id']);
+    $Expired_Date = mysqli_real_escape_string($conn, $_POST['Expired_Date']);
+    $Harga_Jual = $Price + ($Price * 0.1);
 
-    $Expired_Date = date('Y-m-d', strtotime('+1 year'));
+    // $Expired_Date = date('Y-m-d', strtotime('+1 year'));
 
-    if (isset($_FILES['Image_Product']['tmp_name'])) {
-        $image = $_FILES['Image_Product']['tmp_name'];
-        $Image_Result = addslashes(file_get_contents($image));
-    } else {
-        echo "Tidak ada gambar yang diunggah!";
-        exit;
-    }
+    // if (isset($_FILES['Image_Product']['tmp_name'])) {
+    //     $image = $_FILES['Image_Product']['tmp_name'];
+    //     $Image_Result = addslashes(file_get_contents($image));
+    // } else {
+    //     echo "Tidak ada gambar yang diunggah!";
+    //     exit;
+    // }
 
-    $query = "INSERT INTO Products (Name, Price, Stock, Description, Image_Product, Expired_Date, Category_Id)
-        VALUES ('$Name', '$Price', '$Stock', '$Description', '$Image_Result', '$Expired_Date', '$Category_Id')";
+    $query = "INSERT INTO Products (Name, Price, Harga_Jual, Stock, Expired_Date, Category_Id)
+        VALUES ('$Name', '$Price', '$Harga_Jual', '$Stock', '$Expired_Date', '$Category_Id')";
 
     if (mysqli_query($conn, $query)) {
         header("Location: products.php");
@@ -56,7 +58,7 @@ $conn->close();
         <?php include 'sidebar.php' ?>
         <div class="content">
             <div class="title">
-                <h1>ADD NEW PRODUCT</h1>
+                <h1>TAMBAH PRODUK BARU</h1>
             </div>
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
@@ -72,16 +74,21 @@ $conn->close();
                         oninput="toggleLabel(this)">
                 </div>
                 <div class="form-group">
+                    <label for="expired_date">Input Expired Date</label>
+                    <input type="date" class="form-input" name="Expired_Date" id="expired_date" placeholder="Enter Expired Date"
+                        oninput="toggleLabel(this)">
+                </div>
+                <!-- <div class="form-group">
                     <input type="text" class="form-input" name="Description" id="description"
                         placeholder="Enter Description" oninput="toggleLabel(this)">
-                </div>
-                <div class="form-group">
+                </div> -->
+                <!-- <div class="form-group">
                     <label class="custom-file-upload">
                         Enter Product Image
                         <input type="file" class="file-input" name="Image_Product" id="fileUpload" required />
                     </label>
                     <div class="file-name" id="fileName">File not found!</div>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="Category_Id">Choose Category</label>
                     <select name="Category_Id" id="Category_Id" required>

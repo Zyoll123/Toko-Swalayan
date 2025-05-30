@@ -36,12 +36,13 @@ $query = "SELECT transactions.Id, transactions.Transaction_Date, transactions.To
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Id Transaction</th>
-                            <th>Transaction Date</th>
+                            <th>Id Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>Total</th>
-                            <th>Money Paid</th>
-                            <th>Change</th>
-                            <th>Cashier Name</th>
+                            <th>Uang Dibayar</th>
+                            <th>Kembalian</th>
+                            <th>Nama Kasir</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,6 +60,9 @@ $query = "SELECT transactions.Id, transactions.Transaction_Date, transactions.To
                                     <td><?= htmlspecialchars($d['Money_Paid']) ?></td>
                                     <td><?= htmlspecialchars($d['Change']) ?></td>
                                     <td><?= htmlspecialchars($d['Cashier_Name']) ?></td>
+                                    <td class="action-buttons">
+                                        <a href="#" class="btn edit">Selengkapnya</a>
+                                    </td>
                                 </tr>
                                 <?php
                             }

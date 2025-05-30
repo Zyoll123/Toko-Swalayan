@@ -138,7 +138,6 @@ label {
 
 /* Ikon dalam Input */
 .form-group::before {
-    content: '📦';
     position: absolute;
     left: 16px;
     top: 50%;
@@ -148,9 +147,7 @@ label {
     pointer-events: none;
 }
 
-.form-group:nth-of-type(2)::before {
-    content: '🛒';
-}
+/*  */
 
 /* Tombol */
 button[type="submit"] {

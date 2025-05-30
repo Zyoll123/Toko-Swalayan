@@ -57,15 +57,15 @@ if (isset($_GET['filter'])) {
                         </a>
                     </div>
                     <div class="add-users">
-                        <a href="add_new_admin.php">ADD NEW ADMIN</a>
-                        <a href="add_new_cashier.php">ADD NEW CASHIER</a>
+                        <a href="add_new_admin.php">TAMBAH USER ADMIN</a>
+                        <a href="add_new_cashier.php">TAMBAH USER KASIR</a>
                     </div>
                 </div>
                 <table>
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Nama User</th>
                             <th>Email</th>
                             <th>Role</th>
                             <th>Edit</th>

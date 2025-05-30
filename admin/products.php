@@ -19,7 +19,7 @@ if (isset($_GET['filter'])) {
         $query = "SELECT * FROM products ORDER BY Stock ASC";
         $active_filter = 'display';
     } elseif ($filter === 'warehouse') {
-        $query = "SELECT products.Name, products.Price, products.Description, warehouses.Stock, warehouses.Id, warehouses.Expired_Date
+        $query = "SELECT products.Name, warehouses.Price, warehouses.Harga_Jual, warehouses.Stock, warehouses.Id, warehouses.Expired_Date, warehouses.Date_Added
                 FROM warehouses
                 INNER JOIN products ON warehouses.Product_Id = products.Id
                 WHERE warehouses.Stock > 0 ";
@@ -65,27 +65,30 @@ if (isset($_GET['filter'])) {
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Description</th>
+                            <th>No</th>
+                            <th>Nama Produk</th>
+                            <th>HPP</th>
+                            <th>Harga Jual</th>
+                            <th>Date Added</th>
                             <th>Expired Date</th>
-                            <th>Stock</th>
+                            <th>Stok</th>
                             <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
+                        $no = 1;
                         $result = $conn->query($query);
 
                         if ($result && $result->num_rows > 0) {
                             while ($d = $result->fetch_assoc()) {
                                 ?>
                                 <tr>
-                                    <td><?= $d['Id'] ?></td>
+                                    <td><?= $no++ ?></td>
                                     <td><?= htmlspecialchars($d['Name']) ?></td>
-                                    <td><?= number_format($d['Price'], 2) ?></td>
-                                    <td><?= htmlspecialchars($d['Description']) ?></td>
+                                    <td>Rp <?= number_format($d['Price'], 2) ?></td>
+                                    <td>Rp <?= number_format($d['Harga_Jual'], 2) ?></td>
+                                    <td><?= htmlspecialchars($d['Date_Added']) ?></td>
                                     <td><?= htmlspecialchars($d['Expired_Date']) ?></td>
                                     <td><?= $d['Stock'] ?></td>
                                     <td class="action-buttons">

@@ -39,7 +39,7 @@ $conn->close();
         <?php include 'sidebar.php' ?>
         <div class="content">
             <div class="title">
-                <h1>ADD NEW CATEGORY</h1>
+                <h1>TAMBAH KATEGORI BARU</h1>
             </div>
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
