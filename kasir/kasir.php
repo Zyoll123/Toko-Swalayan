@@ -83,16 +83,19 @@ if (isset($_POST['checkout'])) {
             mysqli_query($conn, "UPDATE products SET Stock = '$stok_baru' WHERE Id = '{$item['Id']}'");
         }
 
-        $invoice = [
+        $_SESSION['invoice'] = [
             "kasir" => $kasirName,
             "tanggal" => $tanggal,
             "total_belanja" => $total_belanja,
             "total_uang" => $total_uang,
             "kembalian" => $kembalian,
-            "items" => $_SESSION['cart']
+            "items" => $_SESSION['cart'],
+            "transaction_id" => $transaction_id
         ];
 
         $_SESSION['cart'] = [];
+        header("Location: invoice.php");
+        exit();
     } else {
         echo "<script>alert('Uang yang diberikan tidak cukup!');</script>";
     }
@@ -113,7 +116,7 @@ if (isset($_POST['checkout'])) {
 <body>
     <nav class="navbar">
         <div class="logo">
-            <h2>Nama Toko</h2>
+            <h2>PRIME MARKET</h2>
         </div>
         <div class="kasir-info">
             <p id="liveClock">Loading time...</p>
@@ -196,10 +199,6 @@ if (isset($_POST['checkout'])) {
             </div>
         </div>
         <div class="transaction-info">
-            <!-- <div class="cart-header">
-                <input type="text" placeholder="Customer">
-                <p id="liveClock">Loading time...</p>
-            </div> -->
             <div class="cart-items">
                 <?php if (empty($_SESSION['cart'])) { ?>
                     <div class="empty-cart">
@@ -264,88 +263,10 @@ if (isset($_POST['checkout'])) {
             </div>
 
         </div>
-        <div class="modal" id="myModal" style="display: <?= $invoice ? 'block' : 'none' ?>;">
-            <div class="modal-content">
-                <div class="invoice">
-                    <div class="invoice-header">
-                        <div class="invoice-title">STRUK PEMBAYARAN</div>
-                        <div class="invoice-subtitle">MUKTI ABADI - Point of Sale</div>
-                    </div>
-
-                    <div class="invoice-info">
-                        <div>
-                            <strong>Kasir:</strong> <?= $invoice['kasir'] ?>
-                        </div>
-                        <div>
-                            <strong>Tanggal:</strong> <?= date('d/m/Y H:i', strtotime($invoice['tanggal'])) ?>
-                        </div>
-                    </div>
-
-                    <div class="invoice-details">
-                        <table class="invoice-table">
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Qty</th>
-                                    <th>Harga</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($invoice['items'] as $item) { ?>
-                                    <tr>
-                                        <td><?= $item['Name'] ?></td>
-                                        <td><?= $item['Quantity'] ?></td>
-                                        <td>Rp<?= number_format($item['Price'], 0, ",", ".") ?></td>
-                                        <td>Rp<?= number_format($item['Subtotal'], 0, ",", ".") ?></td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="invoice-summary">
-                        <div class="invoice-row">
-                            <span>Total Belanja:</span>
-                            <span>Rp<?= number_format($invoice['total_belanja'], 0, ",", ".") ?></span>
-                        </div>
-                        <div class="invoice-row">
-                            <span>Uang:</span>
-                            <span>Rp<?= number_format($invoice['total_uang'], 0, ",", ".") ?></span>
-                        </div>
-                        <div class="invoice-row invoice-kembalian">
-                            <span>Kembalian:</span>
-                            <span>Rp<?= number_format($invoice['kembalian'], 0, ",", ".") ?></span>
-                        </div>
-                    </div>
-
-                    <div class="invoice-footer">
-                        <p>Terima kasih atas kunjungan anda!</p>
-                        <p>Barang yang sudah dibeli tidak dapat dikembalikan.</p>
-                    </div>
-
-                    <div class="invoice-action">
-                        <button onclick="window.print()" class="invoice-btn btn-print">
-                            <i class="fa-solid fa-print"></i>Print
-                        </button>
-                        <button onclick="resetTransaction()" class="invoice-btn btn-transaction">
-                            <i class="fas fa-redo"></i>Transaksi Baru
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>
     <script src="js/kasir.js"></script>
-    <script>
-        function resetTransaction() {
-            var modal = document.getElementById('myModal')
-            if (modal) {
-                modal.style.display = 'none'
-            }
-        }
-    </script>
 </body>
 
 </html>
