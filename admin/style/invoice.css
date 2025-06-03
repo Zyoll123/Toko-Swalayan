@@ -1,0 +1,181 @@
+/* Reset dasar untuk invoice */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    /* Hapus overflow hidden supaya halaman bisa discroll */
+    /* height: 100%; */
+    /* overflow: hidden; */
+}
+
+/* Container invoice */
+.invoice-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+/* Header */
+.invoice-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.invoice-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.invoice-subtitle {
+    font-size: 1rem;
+    color: #7f8c8d;
+}
+
+/* Info kasir & tanggal */
+.invoice-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.invoice-info > div {
+    flex: 1;
+}
+
+/* Table invoice */
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.invoice-table th,
+.invoice-table td {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+.invoice-table th {
+    background-color: #2c3e50;
+    color: white;
+}
+
+/* Summary section */
+.invoice-summary {
+    border-top: 1px dashed #e0e0e0;
+    padding-top: 20px;
+}
+
+.invoice-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.invoice-kembalian {
+    font-weight: 700;
+    color: #27ae60;
+    font-size: 1.1rem;
+}
+
+/* Footer text */
+.invoice-footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+/* Tombol print dan kembali */
+.invoice-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    gap: 15px;
+}
+
+.invoice-btn {
+    padding: 10px 20px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-print {
+    background-color: #1abc9c;
+    color: white;
+}
+
+.btn-print:hover {
+    background-color: #16a085;
+}
+
+.btn-back {
+    background-color: #34495e;
+    color: white;
+}
+
+.btn-back:hover {
+    background-color: #2c3e50;
+}
+
+/* Icon styling */
+.invoice-btn i {
+    font-size: 1.1rem;
+}
+
+/* Print styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .invoice-container,
+    .invoice-container * {
+        visibility: visible;
+    }
+
+    .invoice-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        background: white;
+        border-radius: 0;
+    }
+
+    .invoice-actions {
+        display: none;
+    }
+}
+
+/* Responsive kecil */
+@media (max-width: 600px) {
+    .invoice-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .invoice-container {
+        padding: 20px 15px;
+        margin: 20px 10px;
+    }
+}

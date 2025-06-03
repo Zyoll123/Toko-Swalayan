@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = "INSERT INTO categories (Name) VALUES ('$Name')";
 
     if (mysqli_query($conn, $query)) {
-        header("Location: products.php");
+        header("Location: categories.php");
         exit();
     } else {
         echo "Error: " . mysqli_error($conn);

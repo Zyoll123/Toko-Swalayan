@@ -32,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $Name = trim($_POST['Name'] ?? '');
     $Price = trim($_POST['Price'] ?? '');
     $Stock = trim($_POST['Stock'] ?? '');
-    $Description = trim($_POST['Description'] ?? '');
+
+    $Harga_Jual = $Price + ($Price * 0.1);
 
     $errors = [];
     if (empty($Name))
@@ -41,13 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Price harus diisi";
     if (empty($Stock))
         $errors[] = "Stock harus diisi";
-    if (empty($Description))
-        $errors[] = "Description harus diisi";
+    
 
     if (empty($errors)) {
-        $query = "UPDATE products SET Name = ?, Price = ?, Stock = ?, Description = ? WHERE Id = ?";
+        $query = "UPDATE products SET Name = ?, Price = ?, Harga_Jual = ?, Stock = ? WHERE Id = ?";
         $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, "sdisi", $Name, $Price, $Stock, $Description, $Id);
+        mysqli_stmt_bind_param($stmt, "sddii", $Name, $Price, $Harga_Jual, $Stock, $Id);
         if (mysqli_stmt_execute($stmt)) {
             header("Location: products.php");
             exit();
@@ -92,10 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <input type="number" class="form-input" name="Stock" id="Stock" placeholder="Enter new stock"
                         value="<?= $d['Stock'] ?>">
-                </div>
-                <div class="form-group">
-                    <input type="text" clang="form-input" name="Description" id="Description"
-                        placeholder="Enter new description" value="<?= htmlspecialchars($d['Description']) ?>">
                 </div>
                 <button type="submit">Update</button>
             </form>

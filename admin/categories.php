@@ -38,23 +38,25 @@ $query = "SELECT * FROM categories";
                 <table>
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>No</th>
                             <th>Nama Kategori</th>
                             <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
+                        $no = 1;
                         $result = $conn->query($query);
                         if ($result && $result->num_rows > 0) {
                             while ($d = $result->fetch_assoc()) {
                                 ?>
                                 <tr>
-                                    <td><?= $d['Id'] ?></td>
+                                    <td><?= $no++ ?></td>
                                     <td><?= htmlspecialchars($d['Name']) ?></td>
                                     <td class="action-buttons">
                                         <a href="update_category.php?Id=<?= $d['Id'] ?>" class="btn edit">Update</a>
-                                        <a href="delete_category.php?Id=<?= $d['Id'] ?>" class="btn delete">Delete</a>
+                                        <a href="delete_category.php?Id=<?= $d['Id'] ?>" class="btn delete" 
+                                        onclick="return confirm('Apakah anda yakin ingin menghapus product ini?')">Delete</a>
                                     </td>
                                 </tr>
                                 <?php

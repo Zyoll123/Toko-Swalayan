@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $Name = trim($_POST['Name']);
         $Password = trim($_POST['Password']);
 
-        $stmt = $conn->prepare("SELECT * FROM Accounts WHERE Name = ? AND Password = ?");
+        $stmt = $conn->prepare("SELECT * FROM accounts WHERE Name = ? AND Password = ?");
         if ($stmt) {
             $stmt->bind_param("ss", $Name, $Password);
             $stmt->execute();

@@ -262,7 +262,7 @@ tr.clickable-row:hover {
 .cart-items {
     flex: 1;
     overflow-y: auto;
-    max-height: 400px;
+    max-height: 600px;
     /* bisa kamu sesuaikan */
     padding: 10px;
     border: 1px solid #ddd;

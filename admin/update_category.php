@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, "si", $Name, $Id);
         if (mysqli_stmt_execute($stmt)) {
-            header("Location: products.php");
+            header("Location: categories.php");
             exit();
         } else {
             echo "Error: " . mysqli_error($conn);

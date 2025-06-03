@@ -18,9 +18,9 @@ if (isset($_GET['Id'])) {
         $delete_stmt->bind_param("i", $Id);
         
         if ($delete_stmt->execute()) {
-            header("Location: products.php?success=Kategori berhasil dihapus");
+            header("Location: categories.php?success=Kategori berhasil dihapus");
         } else {
-            header("Location: products.php?error=Gagal menghapus kategori");
+            header("Location: categories.php?error=Gagal menghapus kategori");
         }
         exit();
     }

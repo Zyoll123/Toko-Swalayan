@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $Category_Id = mysqli_real_escape_string($conn, $_POST['Category_Id']);
     $Expired_Date = mysqli_real_escape_string($conn, $_POST['Expired_Date']);
     $Harga_Jual = $Price + ($Price * 0.1);
+    $Date = date('Y-m-d');
 
     // $Expired_Date = date('Y-m-d', strtotime('+1 year'));
 
@@ -26,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //     exit;
     // }
 
-    $query = "INSERT INTO Products (Name, Price, Harga_Jual, Stock, Expired_Date, Category_Id)
-        VALUES ('$Name', '$Price', '$Harga_Jual', '$Stock', '$Expired_Date', '$Category_Id')";
+    $query = "INSERT INTO Products (Name, Price, Harga_Jual, Stock, Date_Added, Expired_Date, Category_Id)
+        VALUES ('$Name', '$Price', '$Harga_Jual', '$Stock', '$Date', '$Expired_Date', '$Category_Id')";
 
     if (mysqli_query($conn, $query)) {
         header("Location: products.php");

@@ -56,12 +56,12 @@ $query = "SELECT transactions.Id, transactions.Transaction_Date, transactions.To
                                     <td><?= $no++ ?></td>
                                     <td><?= htmlspecialchars($d['Id']) ?></td>
                                     <td><?= htmlspecialchars($d['Transaction_Date']) ?></td>
-                                    <td><?= htmlspecialchars($d['Total']) ?></td>
-                                    <td><?= htmlspecialchars($d['Money_Paid']) ?></td>
-                                    <td><?= htmlspecialchars($d['Change']) ?></td>
+                                    <td>Rp<?= number_format($d['Total'], 2) ?></td>
+                                    <td>Rp<?= number_format($d['Money_Paid'], 2) ?></td>
+                                    <td>Rp<?= number_format($d['Change'], 2) ?></td>
                                     <td><?= htmlspecialchars($d['Cashier_Name']) ?></td>
                                     <td class="action-buttons">
-                                        <a href="#" class="btn edit">Selengkapnya</a>
+                                        <a href="invoice.php?Id=<?= $d['Id'] ?>" class="btn edit">Selengkapnya</a>
                                     </td>
                                 </tr>
                                 <?php
