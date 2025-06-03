@@ -89,7 +89,7 @@ if (isset($_GET['filter'])) {
                                     <td>Rp <?= number_format($d['Price'], 2) ?></td>
                                     <td>Rp <?= number_format($d['Harga_Jual'], 2) ?></td>
                                     <td><?= htmlspecialchars($d['Date_Added']) ?></td>
-                                    <td><?= htmlspecialchars($d['Expired_Date']) ?></td>
+                                    <td><?= !empty($d['Expired_Date']) ? htmlspecialchars($d['Expired_Date']) : 'null' ?></td>
                                     <td><?= $d['Stock'] ?></td>
                                     <td class="action-buttons">
                                         <?php if ($active_filter == 'display'): ?>

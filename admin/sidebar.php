@@ -1,6 +1,6 @@
 <div class="side-bar">
     <div class="user-info">
-        👋 Halo, <strong><?php echo htmlspecialchars($adminName); ?></strong>
+        ADMIN : <strong><?php echo htmlspecialchars($adminName); ?></strong>
     </div>
     <div class="side-bar-item">
         <a href="index.php">Dashboard</a>

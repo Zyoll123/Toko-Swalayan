@@ -55,7 +55,7 @@
 
             <div class="invoice-info">
                 <div><strong>Kasir:</strong> <?= htmlspecialchars($invoice['kasir']) ?></div>
-                <div><strong>Tanggal:</strong> <?= date('d/m/Y H:i', strtotime($invoice['Transaction_Date'])) ?></div>
+                <div><strong>Tanggal:</strong> <?= date('d/m/Y', strtotime($invoice['Transaction_Date'])) ?></div>
             </div>
 
             <table class="invoice-table">
@@ -76,8 +76,8 @@
                                     <tr>
                                         <td><?= $d['Name'] ?></td>
                                         <td><?= $d['Quantity'] ?></td>
-                                        <td><?= $d['Price'] ?></td>
-                                        <td><?= $d['Subtotal'] ?></td>
+                                        <td>Rp<?= number_format($d['Price'], 0, ",", ".") ?></td>
+                                        <td>Rp<?= number_format($d['Subtotal'], 0, ",", ".") ?></td>
                                     </tr>
                                     <?php
                                     }

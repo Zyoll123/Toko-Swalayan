@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $Stock = mysqli_real_escape_string($conn, $_POST['Stock']);
     // $Description = mysqli_real_escape_string($conn, $_POST['Description']);
     $Category_Id = mysqli_real_escape_string($conn, $_POST['Category_Id']);
-    $Expired_Date = mysqli_real_escape_string($conn, $_POST['Expired_Date']);
+    $Expired_Date = !empty($_POST['Expired_Date']) ? "'" . mysqli_real_escape_string($conn, $_POST['Expired_Date']) . "'" : "NULL";
     $Harga_Jual = $Price + ($Price * 0.1);
     $Date = date('Y-m-d');
 
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // }
 
     $query = "INSERT INTO Products (Name, Price, Harga_Jual, Stock, Date_Added, Expired_Date, Category_Id)
-        VALUES ('$Name', '$Price', '$Harga_Jual', '$Stock', '$Date', '$Expired_Date', '$Category_Id')";
+        VALUES ('$Name', '$Price', '$Harga_Jual', '$Stock', '$Date', $Expired_Date, '$Category_Id')";
 
     if (mysqli_query($conn, $query)) {
         header("Location: products.php");
@@ -64,15 +64,15 @@ $conn->close();
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <input type="text" class="form-input" id="name" name="Name" placeholder="Enter Product Name"
-                        oninput="toggleLabel(this)">
+                        oninput="toggleLabel(this)" required>
                 </div>
                 <div class="form-group">
                     <input type="number" class="form-input" name="Price" id="price" placeholder="Enter Price"
-                        oninput="toggleLabel(this)">
+                        oninput="toggleLabel(this)" required>
                 </div>
                 <div class="form-group">
                     <input type="number" class="form-input" name="Stock" id="stock" placeholder="Enter Stock"
-                        oninput="toggleLabel(this)">
+                        oninput="toggleLabel(this)" required>
                 </div>
                 <div class="form-group">
                     <label for="expired_date">Input Expired Date</label>
@@ -101,7 +101,10 @@ $conn->close();
                         ?>
                     </select>
                 </div>
-                <button type="submit">ADD</button>
+                <button type="submit"
+                    <?php if (empty($Expired_Date)) { echo 'onclick="return confirm(`Apakah anda yakin untuk mengkosongi expired date?`)"'; } ?>>
+                    ADD
+                </button>
             </form>
         </div>
     </div>

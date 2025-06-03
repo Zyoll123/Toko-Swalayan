@@ -98,7 +98,7 @@ while ($row = $result_chart->fetch_assoc()) {
             </div>
 
             <div class="card-chart">
-                <h2>Stok Display</h2>
+                <h2>Stok Display (Rendah)</h2>
                 <div class="table-stock">
 
                     <table>
